@@ -1,39 +1,70 @@
-
-# TypeScript Sample Template Program for Battlefield 6 Rule Editor
+# BF6 Squad Shuffle
 
 [※ このリポジトリの日本語での説明はこちらです。](./README-JP.md)
 
-This repository is designed to make it easier to write Battlefield (BF) Rule Editor scripts in TypeScript.
+This repository contains a Battlefield 6 Portal TypeScript rule script that shuffles players by squad when the game mode starts.
 
-It provides the following features:
+## What It Does
 
+When `OnGameModeStarted` is fired, the script:
 
-* When you push to GitHub, ESLint automatically checks your code syntax.
-* Running `npm run build` combines multiple .ts files into a single .ts file.
-  * The BF Portal Rule Editor only accepts a single TypeScript file.
-* `bfportal-vitest-mock` and `vitest` are already installed, so you can easily use unit tests.
+* Gets all players currently in the game with `mod.AllPlayers()`.
+* Does nothing when fewer than two players are in the game.
+* Finds squad leaders, then converts them into a randomized squad list.
+* Keeps each squad together while assigning squads between Team 1 and Team 2.
+* Tracks the player count difference between teams and assigns the next squad to the smaller side.
+* Skips `SetTeam` when a player is already on the target team.
+
+The script uses helper functions from `modlib`, including:
+
+* `modlib.FilteredArray` to filter Portal arrays.
+* `modlib.ConvertArray` to convert `mod.Array` into a JavaScript array.
+* `modlib.Equals` to compare Portal objects.
+* `modlib.getTeamId` to compare team object IDs.
+
+## Important Notes
+
+This script is intended to run at game start. It does not continuously rebalance teams after players join or leave.
+
+The script has a guard for one-player test sessions because BF6 Portal may throw a `SetTeam` / `SwitchTeam` exception when a team switch cannot be completed.
+
+Squad assignment order is randomized with `mod.RandomizedArray`, so the resulting team composition may differ each round.
 
 ## Installation
 
 0. Install Node.js.
-  If you are new to JavaScript, it is recommended to download the .msi installer for the Windows x64 architecture from the following link and follow the installation steps:
-  https://nodejs.org/en/download
+   If you are new to JavaScript, download the Windows x64 `.msi` installer from:
+   https://nodejs.org/en/download
 1. Download this repository.
-2. Place the PortalSDK/code folder from the official Battlefield 6 SDK into the code directory of this project.
-3. Run the command npm install.
+2. Place the official Battlefield 6 SDK `PortalSDK/code` folder into this project's `code` directory.
+3. Run `npm install`.
 
 ## Usage
 
-1. Write your program in the mods folder.
-2. After you finish coding, run the command npm run build.
-3. Upload `dist/Script.ts` and `dist/String.json` to the BF Portal Rule Editor.
+1. Edit the script in the `mods` folder.
+2. Run `npm run build`.
+3. Upload `dist/Script.ts` and `dist/Strings.json` to the BF Portal Rule Editor.
 
-### Setting Up Strings
+## Tests
 
-Add the strings you want to include in `dist/String.json`.
+This project uses `bfportal-vitest-mock` and `vitest`.
 
-### How to run the tests
+Run:
 
-This project uses the `bfportal-vitest-mock` package. For how to install and use it, please refer to the section below.
+```bash
+npm run test
+```
 
-https://github.com/link1345/bfportal-vitest-mock
+The current tests verify that:
+
+* The script does not call `SetTeam` when fewer than two players are present.
+* Players are moved by squad.
+* Players already on the target team are skipped.
+
+## Checks
+
+```bash
+npm run lint
+npm run test
+npm run build
+```
