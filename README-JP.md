@@ -5,6 +5,13 @@
 このリポジトリは、Battlefield 6 Portalのルールエディタ向けTypeScriptです。
 ゲームモード開始時に、ゲームへ参加しているプレイヤーを分隊単位でチームシャッフルします。
 
+## Questions / Support
+
+ご質問やご意見がありましたら、PlumRiceのDiscordサーバーでお気軽にご連絡ください
+このプロジェクトに関する議論は、適切なスレッド／チャンネルをご利用ください。
+
+https://discord.gg/Zy65k8AxH2
+
 ## 何をするか
 
 `OnGameModeStarted`が呼ばれたとき、下記の処理をします。

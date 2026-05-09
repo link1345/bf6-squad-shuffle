@@ -4,6 +4,14 @@
 
 This repository contains a Battlefield 6 Portal TypeScript rule script that shuffles players by squad when the game mode starts.
 
+## Questions / Support
+
+If you have questions or feedback, feel free to contact me on the Battlefield Portal Discord server 😄
+
+Please use the appropriate thread/channel for discussions related to this project.
+
+https://discord.gg/Zy65k8AxH2
+
 ## What It Does
 
 When `OnGameModeStarted` is fired, the script:
