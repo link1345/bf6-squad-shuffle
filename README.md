@@ -6,7 +6,7 @@ This repository contains a Battlefield 6 Portal TypeScript rule script that shuf
 
 ## Questions / Support
 
-If you have questions or feedback, feel free to contact me on the Battlefield Portal Discord server 😄
+If you have questions or feedback, feel free to contact me on the PlumRice Discord server 😄
 
 Please use the appropriate thread/channel for discussions related to this project.
 
